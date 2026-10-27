@@ -1,0 +1,924 @@
+{
+  "uyari": "Bu bir hukuki görüş değildir; bilgilendirme amaçlıdır.",
+  "gonderi": "gonderi.yaml",
+  "kural_surumu": "1.0.0",
+  "kontrol_tarihi": "2026-10-27",
+  "sonuc": "DÜZELTME GEREKLİ",
+  "sayilar": {
+    "DUZELT": 4,
+    "UZMANA_SOR": 1,
+    "UYARI": 3,
+    "MANUEL": 2,
+    "BILGI": 1,
+    "GECTI": 4,
+    "UYGULANMAZ": 30
+  },
+  "maddeler": [
+    {
+      "id": "ETK-01",
+      "durum": "GECTI",
+      "baslik": "Ticari ilişki var mı?",
+      "kategori": "etiket",
+      "bulgu": "Ticari ilişki beyan edildi (ucret).",
+      "duzeltme": "Ticari ilişkiyi netleştirin. Yukarıdakilerden biri varsa \"ticari_iliski: evet\" yapın ve etiket kurallarını uygulayın. Yönlendirme ya da hediye ürün de, para alınmasa bile, reklam sayılır.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(2)(a)-(ç)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "4(1)(ş) sosyal medya etkileyicisi tanımı",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz",
+          "madde": "5(2)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-02",
+      "durum": "DUZELT",
+      "baslik": "\"Reklam\" ya da \"Tanıtım\" ifadesi var mı?",
+      "kategori": "etiket",
+      "bulgu": "Açıklamada \"Reklam\" ya da \"Tanıtım\" yok. Bulunan \"işbirliği\" tek başına yeterli değil (23/A(3)).",
+      "duzeltme": "Açıklamanın en başına \"Reklam\" (ya da \"Tanıtım\") yazın. \"#işbirliği\" gibi etiketleri isterseniz ondan SONRA ekleyebilirsiniz.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz (eski liste, çelişki notu için)",
+          "madde": "8(1), 10(1)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "2021 Kılavuzu \"#Sponsor\", \"#İşbirliği\", \"#Ortaklık\", \"@marka ile işbirliği\" ifadelerini de sayıyordu. Bazı haberler 01.08.2026 sonrası \"iş birliği\" ve \"sponsorlu içerik\" ifadelerinin de yeterli olduğunu yazıyor. Resmî Gazete'deki 23/A(3) metni ise yalnız \"Reklam\" ya da \"Tanıtım\" için \"zorunludur\" diyor. Daha sıkı olan Yönetmelik metni kodlandı."
+    },
+    {
+      "id": "ETK-03",
+      "durum": "DUZELT",
+      "baslik": "Reklam verenin adı ya da @hesabı etiketle birlikte mi?",
+      "kategori": "etiket",
+      "bulgu": "Reklam veren adı var ama \"Reklam/Tanıtım\" ifadesiyle birlikte değil.",
+      "duzeltme": "Etiket satırını \"Reklam | @markahesabı\" ya da \"Reklam: @markahesabı tarafından sağlandı.\" biçiminde yazın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Metin adın \"içerikte\" yer almasını istiyor; etiketle aynı satırda olma şartı açıkça yazmıyor. Kontrol daha sıkı davranır: ad etiketle aynı satırda değilse UYARI verir."
+    },
+    {
+      "id": "ETK-04",
+      "durum": "DUZELT",
+      "baslik": "Etiket ilk bakışta görünüyor mu (ilk satır, diğer etiketlerden önce)?",
+      "kategori": "etiket",
+      "bulgu": "Etiket olmadığı için konum kontrolü geçemedi.",
+      "duzeltme": "Etiket satırını açıklamanın ilk satırına, her şeyden önce koyun. Yorumlara, son satırlara ya da hashtag yığınının içine koymayın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(b), 23/A(4)(c)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz",
+          "madde": "5(3)(b), 7(1) (\"daha fazla oku\" alanına tıklatmadan)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Görünen karakter sınırı platforma ve cihaza göre değişir (dosyadaki sayılar tahmindir). Bu yüzden ilk satır şartı aranır."
+    },
+    {
+      "id": "ETK-05",
+      "durum": "DUZELT",
+      "baslik": "Videoda/story'de ekranda etiket ilk kareden itibaren var mı?",
+      "kategori": "etiket",
+      "bulgu": "Ekranda \"Reklam/Tanıtım\" yazısı yok.",
+      "duzeltme": "Ekrana \"REKLAM · @markahesabı\" yazısını 0. saniyeden sona kadar, üst-orta bölgede, düz renkli bir kutu üstünde koyun.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(b)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz",
+          "madde": "10(1) (kısa süreli içerik: \"paylaşım süresince\"), 7(1) (video: \"video içinde sürekli\" seçeneği)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Yönetmelik videoda etiketin ne kadar süre kalacağını yazmıyor, sadece \"ilk karşılaştıkları anda\" diyor. Reels'te açıklamanın ilk satırının yeterli sayılıp sayılmayacağı net değil. Daha sıkı yorum kodlandı: ekranda ilk kareden itibaren (story'de tüm süre) zorunlu, diğer videolarda tüm süre önerilir."
+    },
+    {
+      "id": "ETK-06",
+      "durum": "MANUEL",
+      "baslik": "Etiket okunaklı mı (kontrast, boyut)?",
+      "kategori": "etiket",
+      "bulgu": "Etiketin rengi zeminden ayrışıyor mu, telefonda kolay okunuyor mu? Kareye bakın.",
+      "duzeltme": "Beyaz yazı + koyu düz kutu (ya da tersi) kullanın. Telefonda kolun uzunluğunda okunabilecek boyut seçin; hareketli zeminde opak kutu kullanın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(a)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "21(1)(a)-(b) (alt yazı kontrastı ve opak blok; benzetme yoluyla)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-07",
+      "durum": "MANUEL",
+      "baslik": "Etiket platform arayüzüyle çakışıyor mu?",
+      "kategori": "etiket",
+      "bulgu": "Ekranda etiket yok; eklerken üst-orta bölgeye koyun, arayüzle çakışmadığını karede kontrol edin.",
+      "duzeltme": "Etiketi üst-orta bölgeye (dikey videoda yaklaşık üstten %15-25 arası) taşıyın; sağdaki düğme sütunundan ve alttaki açıklama alanından uzak tutun.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(ç)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-08",
+      "durum": "UYARI",
+      "baslik": "Videoda sözlü beyan var mı?",
+      "kategori": "etiket",
+      "bulgu": "Seslendirmenin başında \"reklam/tanıtım\" beyanı yok. (Reels/TikTok için öneri.)",
+      "duzeltme": "Videonun başında (ya da reklam bölümünün başında) \"Bu video [reklam veren] reklamı içerir.\" deyin.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "7(1)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Sözlü beyan şartı Kılavuz'dan geliyor; 2026 Yönetmeliği videoda sözlü beyanı açıkça istemiyor (yalnızca sesli paylaşımlar için 23/A(5)). Kılavuz'daki örnek cümleler \"Reklam/Tanıtım\" kelimesi içermeyebilir; kontrol \"reklam\" kelimesini içeren cümleyi önerir."
+    },
+    {
+      "id": "ETK-11",
+      "durum": "UYARI",
+      "baslik": "Farklı biçim / başka platforma aktarılan paylaşımda etiket",
+      "kategori": "etiket",
+      "bulgu": "Aynı içerik şuralarda da paylaşılacak: instagram_reels, youtube_shorts. Her birine etiketi ayrıca ekleyin.",
+      "duzeltme": "Her platform ve biçim için etiketi ayrıca ekleyin; story'de paylaştığınız reels'in üstüne de etiket koyun.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(e)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETY-02",
+      "durum": "GECTI",
+      "baslik": "Deneyimlenmemiş ürün öneriliyor mu?",
+      "kategori": "etkileyici",
+      "bulgu": "Ürünün deneyimlendiği beyan edildi.",
+      "duzeltme": "Ürünü önce kullanın ya da metni \"ilk izlenim / kutu açılışı\" olarak dürüstçe yazın; \"yıllardır kullanıyorum\" gibi iddialardan kaçının.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(a)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "16(1) (tanıklı reklamlar)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETY-03",
+      "durum": "GECTI",
+      "baslik": "Filtre/efekt kullanıldıysa belirtilmiş mi?",
+      "kategori": "etkileyici",
+      "bulgu": "Filtre/efekt kullanılmadığı beyan edildi.",
+      "duzeltme": "Ekrana ve açıklamaya \"Bu görüntüde filtre kullanılmıştır.\" yazın.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(f)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "YZ-01",
+      "durum": "GECTI",
+      "baslik": "Yapay zekâ kullanımı açıkça belirtilmiş mi?",
+      "kategori": "yapay_zeka",
+      "bulgu": "Yapay zekâ kullanılmadığı beyan edildi.",
+      "duzeltme": "Açıklamaya ve ekrana (görselin üstüne) kısa bir beyan koyun: \"Bu reklamdaki [ürün görselleri / kişi / ses] yapay zekâ ile oluşturulmuştur.\"",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "18(8)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Yönetmelik hazır bir beyan metni vermiyor ve \"önemli ölçüde etkileyecek şekilde\" ölçütünü tanımlamıyor. Kontrol, ürün, sonuç, kişi ya da ses yapay zekâ ile üretildiyse beyanı hem açıklamada hem ekranda ister (daha sıkı). Platformların otomatik \"Yapay zekâ bilgisi\" etiketinin yeterli olup olmadığı net değil."
+    },
+    {
+      "id": "SAG-01",
+      "durum": "UZMANA_SOR",
+      "baslik": "Sağlık beyanı kırmızı bayrakları",
+      "kategori": "saglik",
+      "bulgu": "Sağlık iddiası olabilecek ifadeler: \"tedavi\".",
+      "duzeltme": "Hastalık, tedavi ve kesin sonuç vaat eden ifadeleri çıkarın. Kalan iddialar için belge isteyin ve yayından önce bir uzmana ya da reklam verenin hukuk ekibine danışın.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(b), 6(1)(c)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "5(1)(h), 7(5)(a), 7(8), 9(2)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "RG 33297 Yönetmeliğin 26. maddesini (özel mevzuata uyum) ve Ek'teki A-13 bendini (mevzuata aykırı sağlık beyanı aldatıcı uygulamadır) yürürlükten kaldırdı. Bu, sağlık beyanlarının serbest olduğu anlamına gelmez; sektör mevzuatı ve 7. madde (yanıltıcılık) geçerlidir. Kontrol bu yüzden UZMANA_SOR verir."
+    },
+    {
+      "id": "KRS-03",
+      "durum": "UYARI",
+      "baslik": "Üstünlük iddiası (\"en iyi\", \"1 numara\", \"Türkiye'nin en ...\")",
+      "kategori": "karsilastirma",
+      "bulgu": "Üstünlük iddiası: \"en iyi\". İspat belgesi var mı?",
+      "duzeltme": "Belgesi yoksa üstünlük iddiasını kişisel ve ölçülü bir ifadeyle değiştirin (\"benim favorim\").",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "9(1), 9(2), 7(5)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "6502 sayılı Kanun",
+          "madde": "61(6)",
+          "url": "https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "DGR-04",
+      "durum": "BILGI",
+      "baslik": "Yaptırım bilgisi (her raporda)",
+      "kategori": "diger",
+      "bulgu": "Yaptırım ve sorumluluk özeti.",
+      "duzeltme": "Bilgi amaçlıdır. Ceza tutarları kanunda yazılıdır ve her yıl güncellenir; tutar için resmî kaynağa bakın.",
+      "kaynak": [
+        {
+          "belge": "6502 sayılı Kanun",
+          "madde": "63(1), 77(12)",
+          "url": "https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz",
+          "madde": "11, 12(1)-(2)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-09",
+      "durum": "UYGULANMAZ",
+      "baslik": "Yalnızca sesli paylaşım / podcast: başta sözlü beyan",
+      "kategori": "etiket",
+      "bulgu": "",
+      "duzeltme": "Kaydın ilk cümlesi ve reklam bölümünden hemen önceki cümle \"{reklam_veren} hakkında reklam içerir.\" olsun. Ortada ve sonda da tekrarlayın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(5)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Kılavuz",
+          "madde": "9(1)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-10",
+      "durum": "UYGULANMAZ",
+      "baslik": "Birden fazla parçaya yayılan içerikte her parçada etiket",
+      "kategori": "etiket",
+      "bulgu": "",
+      "duzeltme": "Her story karesine / her parçaya aynı \"REKLAM · @markahesabı\" yazısını koyun.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(4)(d)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETK-12",
+      "durum": "UYGULANMAZ",
+      "baslik": "Markanın kendi hesabı",
+      "kategori": "etiket",
+      "bulgu": "",
+      "duzeltme": "İçerik açıkça markanın kendi tanıtımı değilse (ör. röportaj, haber, \"gerçek kullanıcı\" görünümlü video) \"Reklam\" etiketi ekleyin. Emin değilseniz eklemek düşük maliyetlidir.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "4(1)(ş)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "6(1), 6(3)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Markanın kendi hesabı için 23/A'nın uygulanıp uygulanmayacağı yorum meselesi."
+    },
+    {
+      "id": "ETK-13",
+      "durum": "UYGULANMAZ",
+      "baslik": "Platformun \"ücretli ortaklık\" aracı tek başına yeterli mi?",
+      "kategori": "etiket",
+      "bulgu": "",
+      "duzeltme": "Platform aracını kullanmaya devam edin, ama metne ve ekrana \"Reklam\" etiketini de ekleyin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Reklam Kurulu'nun platform araçlarını nasıl değerlendirdiğine dair 2026 sonrası resmî açıklama bulunamadı."
+    },
+    {
+      "id": "ETY-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "Hediye ürün satın alınmış gibi gösterilmiş mi?",
+      "kategori": "etkileyici",
+      "bulgu": "",
+      "duzeltme": "\"Satın aldım\" yerine \"@markahesabı gönderdi\" ya da \"@markahesabı tarafından sağlandı\" yazın.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(d)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "ETY-04",
+      "durum": "UYGULANMAZ",
+      "baslik": "\"Sadece bir tüketiciyim\" izlenimi",
+      "kategori": "etkileyici",
+      "bulgu": "",
+      "duzeltme": "Bu ifadeleri çıkarın; ilişkiyi \"Reklam | @markahesabı\" ile açıkça belirtin.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(e)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "6502 sayılı Kanun",
+          "madde": "61(4) (örtülü reklam yasağı)",
+          "url": "https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "YZ-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "İnsandan ayırt edilemeyen dijital karakter",
+      "kategori": "yapay_zeka",
+      "bulgu": "",
+      "duzeltme": "Karakter ekrandayken \"Bu karakter yapay zekâ ile oluşturulmuştur.\" yazısını gösterin; açıklamada da belirtin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "18(8)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "YZ-03",
+      "durum": "UYGULANMAZ",
+      "baslik": "Gerçek bir kişinin yapay zekâ kopyası ürünü kullanmış/önermiş gibi mi?",
+      "kategori": "yapay_zeka",
+      "bulgu": "",
+      "duzeltme": "Bu sahneyi çıkarın. Kişi ürünü gerçekten kullanıyor ve onay veriyorsa gerçek çekim ve yazılı izin kullanın; bu durumda da bir uzmana danışın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "27(12)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "5(1)(f), 11(1) (izinsiz kişi kullanımı, itibardan haksız yararlanma)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "YZ-04",
+      "durum": "UYGULANMAZ",
+      "baslik": "Yapay zekâ yalnızca yardımcı araç olarak mı kullanıldı?",
+      "kategori": "yapay_zeka",
+      "bulgu": "",
+      "duzeltme": "Görüntü ürünü ya da sonucu olduğundan farklı göstermiyorsa beyan zorunlu olmayabilir. Emin değilseniz kısa bir beyan ekleyin: \"Görsellerde yapay zekâ ile düzenleme yapılmıştır.\"",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "18(8)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "Kapsamın sınırı Yönetmelik'te tanımlı değil."
+    },
+    {
+      "id": "FYT-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "İndirimli satış reklamında zorunlu bilgiler",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Açıklamaya ve ekrana şunu ekleyin: \"İndirimden önceki fiyat: X TL · İndirimli fiyat: Y TL · Kampanya: GG.AA–GG.AA.YYYY · Stok: N adet ile sınırlı (varsa)\".",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 31737 ile değişik)",
+          "madde": "14(1)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2022/02/20220201-6.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "İndirimden önceki fiyat = son 10 günün en düşük fiyatı mı?",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Üstü çizili fiyatı, son 10 günün en düşük fiyatıyla değiştirin ve indirim oranını bu fiyata göre yeniden hesaplayın. Fiyat geçmişinin kaydını (ekran görüntüsü, sipariş kaydı) saklayın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile değişik)",
+          "madde": "14(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik (RG 31737 ile değişik, 01.08.2026 öncesi hali: 30 gün; ispat külfeti)",
+          "madde": "14(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2022/02/20220201-6.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "2026 metni ispat külfeti cümlesini yeniden yazmadı; 2022 metnindeki \"ispat külfeti reklam verene aittir\" cümlesinin yeni üçüncü fıkrada kalıp kalmadığı net değil. Genel kural olarak Yönetmelik 9(1) ve Kanun 61(6) iddiaların ispatını reklam verene yüklüyor."
+    },
+    {
+      "id": "FYT-03",
+      "durum": "UYGULANMAZ",
+      "baslik": "Önceki fiyat aynı satış kanalından mı?",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Üstü çizili fiyatı, indirimin yapıldığı kanalın son 10 günlük en düşük fiyatından alın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "14(5)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-04",
+      "durum": "UYGULANMAZ",
+      "baslik": "İndirim oranı abartılı mı?",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Yüzdeyi doğru referans fiyata göre yeniden hesaplayın (aşağı yuvarlayın).",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "14(2)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-05",
+      "durum": "UYGULANMAZ",
+      "baslik": "Fiyat vergiler dahil ve TL olarak mı?",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Fiyatı KDV dahil toplam fiyat olarak yazın; \"+KDV\" ifadesini kaldırın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "13(2), 13(4)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-06",
+      "durum": "UYGULANMAZ",
+      "baslik": "Süre ya da stok sınırı açıkça yazılmış mı?",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "\"Stoklarla sınırlı\" yerine \"200 adet ile sınırlı\" gibi sayı ve bitiş tarihi yazın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "13(9), 14(1)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-07",
+      "durum": "UYGULANMAZ",
+      "baslik": "Taksit varsa toplam fiyat ve taksit sayısı",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "\"Ayda 250 TL\" yanına \"12 taksit, toplam 3.000 TL\" yazın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "13(7)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "FYT-08",
+      "durum": "UYGULANMAZ",
+      "baslik": "Koşullu indirim (\"2 al 1 öde\", \"500 TL üzeri\")",
+      "kategori": "indirim",
+      "bulgu": "",
+      "duzeltme": "Şartı (\"2 adet alımda\", \"sepet 500 TL ve üzeri\") ana mesajda yazın; önceki fiyat ve tarihleri de ekleyin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "14(7)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "13(6)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "SAG-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "Hekim, eczacı ya da sağlık kuruluşu tanıtımı",
+      "kategori": "saglik",
+      "bulgu": "",
+      "duzeltme": "Klinik, hastane, hekim ya da eczane tanıtımı içeren etkileyici paylaşımlarını yayınlamadan önce uzmana danışın; çoğu durumda yapılmamalıdır.",
+      "kaynak": [
+        {
+          "belge": "Kılavuz",
+          "madde": "6(1)(ç)",
+          "url": "https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "16(3)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "SAG-03",
+      "durum": "UYGULANMAZ",
+      "baslik": "Takviye edici gıda: normal beslenmenin yerine geçer izlenimi / karşılaştırma",
+      "kategori": "saglik",
+      "bulgu": "",
+      "duzeltme": "\"Öğün yerine\", \"yemek yerine\" gibi ifadeleri ve rakip ürünle kıyaslamayı çıkarın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "27(10)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "8(3)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "SAG-04",
+      "durum": "UYGULANMAZ",
+      "baslik": "Reklamı yasak ürün ve hizmetler",
+      "kategori": "saglik",
+      "bulgu": "",
+      "duzeltme": "Bu ürün/hizmet için reklam paylaşımı yapmayın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "27(11), 27(3) (\"yasadışı şans oyunu\" eklendi)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "27(3), 27(8), 27(9)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "COC-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "Çocuklara yönelik ya da çocuk oynayan reklam",
+      "kategori": "cocuk",
+      "bulgu": "",
+      "duzeltme": "Fiyatın yanındaki \"yalnızca/sadece\" kelimelerini, \"annene söyle, al(dır)\" türü çağrıları ve \"her aile bütçesine uygun\" ifadesini çıkarın; çocuğun güvenliğini ve gerçekçi beklentiyi kontrol edin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "24(1)(a)-(n), 5(1)(ç)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "6502 sayılı Kanun",
+          "madde": "61(3)",
+          "url": "https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "COC-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "Çocuğa yönelik ifade ihlalleri (metinde bulunan)",
+      "kategori": "cocuk",
+      "bulgu": "",
+      "duzeltme": "Bulunan ifadeleri çıkarın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "24(1)(ı), 24(1)(j), 24(1)(k), 24(2)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "COC-03",
+      "durum": "UYGULANMAZ",
+      "baslik": "Çocuklara kişisel veriyle hedefli reklam",
+      "kategori": "cocuk",
+      "bulgu": "",
+      "duzeltme": "Reklam hedeflemesinde 18 yaş altı kitleyi ve çocuklara yönelik ilgi alanı profillerini kullanmayın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "25/A(3)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": "25/A satıcı, sağlayıcı ve aracı hizmet sağlayıcılara hitap eder; etkileyicinin kendi hedeflemesine nasıl uygulanacağı net değil."
+    },
+    {
+      "id": "COC-04",
+      "durum": "UYGULANMAZ",
+      "baslik": "Aşırı tüketimi önerilmeyen gıdalar ve çocuklar",
+      "kategori": "cocuk",
+      "bulgu": "",
+      "duzeltme": "Ürünün kırmızı kategoride olup olmadığını reklam verene sorun; öyleyse uyarı metnini ekleyin ve çocuk kitlesini hedeflemeyin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "24/A",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "KRS-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "Rakibin adı, markası ya da logosu geçiyor mu?",
+      "kategori": "karsilastirma",
+      "bulgu": "",
+      "duzeltme": "Rakibin adını, logosunu ve tanınır ambalajını çıkarın (bulanıklaştırmak yeterli olmayabilir; ayırt edilemez hale getirin).",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 28.12.2018/30639 ile eklenen)",
+          "madde": "8(1)(a)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "KRS-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "Karşılaştırma iddiası belgeli ve objektif mi?",
+      "kategori": "karsilastirma",
+      "bulgu": "",
+      "duzeltme": "Karşılaştırmanın dayandığı test raporunu reklam verenden isteyin; yoksa karşılaştırmayı çıkarın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik",
+          "madde": "8(1)(b)-(ı), 9(3), 10(1)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "CEV-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "Çevresel beyan (\"çevre dostu\", \"sürdürülebilir\", \"karbon nötr\")",
+      "kategori": "cevre",
+      "bulgu": "",
+      "duzeltme": "\"Çevre dostu\" yerine somut ifade yazın: \"Ambalaj %80 geri dönüştürülmüş kartondan (belge: ..., ayrıntı: link)\".",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile değişik/eklenen)",
+          "madde": "17(3), 17(5), 17(6), 4(1)(r)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "DGR-01",
+      "durum": "UYGULANMAZ",
+      "baslik": "Tüketici yorumu / puan kullanımı",
+      "kategori": "diger",
+      "bulgu": "",
+      "duzeltme": "Yalnız doğrulanmış alıcı yorumlarını kullanın; tek bir iyi yorumu genel kanaat gibi göstermeyin.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile değişik)",
+          "madde": "28/B(6), 28/B(8)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "DGR-02",
+      "durum": "UYGULANMAZ",
+      "baslik": "Ödül ve akademik unvan",
+      "kategori": "diger",
+      "bulgu": "",
+      "duzeltme": "Ödülün adı, veren kurum ve yılını yazın; para karşılığı alınan \"yılın markası\" türü ödülleri kullanmayın. Unvanı doğru yazın.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen/değişik)",
+          "madde": "27(13), 7(5)(g)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    },
+    {
+      "id": "DGR-03",
+      "durum": "UYGULANMAZ",
+      "baslik": "Çekiliş / yarışma",
+      "kategori": "diger",
+      "bulgu": "",
+      "duzeltme": "\"Reklam | @markahesabı\" etiketini ekleyin; çekiliş başlangıç-bitiş tarihini, katılım ve teslim koşullarını yazın. Çekilişler için ayrı izin mevzuatı olabilir; bu araç onu kontrol etmez.",
+      "kaynak": [
+        {
+          "belge": "Yönetmelik (RG 33297 ile eklenen)",
+          "madde": "23/A(2)(c)",
+          "url": "https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm",
+          "okunma": "2026-10-27"
+        },
+        {
+          "belge": "Yönetmelik",
+          "madde": "15(1)(c)",
+          "url": "https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf",
+          "okunma": "2026-10-27"
+        }
+      ],
+      "belirsizlik": ""
+    }
+  ],
+  "oneriler": [
+    {
+      "ne": "Açıklamanın İLK satırı",
+      "metin": "Reklam | @parlakcilt_ornek"
+    },
+    {
+      "ne": "Ekran yazısı (0–12 sn, üst-orta, düz renkli kutu üstünde)",
+      "metin": "REKLAM · @parlakcilt_ornek"
+    },
+    {
+      "ne": "Sözlü beyan (videonun başında)",
+      "metin": "Bu video Parlak Cilt Laboratuvarı reklamı içerir."
+    }
+  ],
+  "eksik_bilgiler": []
+}

@@ -1,0 +1,48 @@
+# KURGUSAL ÖRNEK: kişi ve marka adları uydurmadır.
+# Durum: içerik üreticisi bir ayakkabı markasının indirimini carousel ile duyuracak; ürün görselleri yapay zekâ
+# ile üretildi. Üstü çizili fiyat pazaryerindeki eski fiyattan alınmış, indirim markanın web sitesinde.
+platform: instagram
+bicim: carousel
+hesap_turu: icerik_uretici
+yayin_tarihi: "2026-11-10"
+ticari_iliski: evet
+iliski_turu: [ucret, yonlendirme]
+reklam_veren: "Patika Ayakkabı"
+reklam_veren_hesap: "@patikaayakkabi_ornek"
+urun_kategorisi: giyim
+platform_ortaklik_etiketi: hayir
+urunu_deneyimledi: evet
+filtre: hayir
+aciklama: |
+  Reklam | @patikaayakkabi_ornek
+  Yeni sezon yürüyüş ayakkabısı %50 indirimde! 1.999 TL yerine 999 TL.
+  Stoklarla sınırlı, kaçırmayın. Bağlantı profilimde.
+  #yürüyüş #ayakkabı #kampanya
+ekran_yazilari:
+  - metin: "%50 İNDİRİM"
+    konum: orta
+  - metin: "1.999 TL → 999 TL"
+    konum: orta
+sure_sn:
+parca_sayisi: 1
+yapay_zeka:
+  kullanildi: evet
+  neler: [urun_gorseli]
+  gercek_kisi_kopyasi: hayir
+indirim:
+  indirimli_fiyat: 999
+  onceki_fiyat: 1999
+  son_10_gun_en_dusuk: 1499
+  baslangic: "2026-11-10"
+  bitis: "2026-11-16"
+  stok_adedi:
+  urun_turu: mal
+  satis_kanali: "markanın web sitesi"
+  onceki_fiyat_kanali: "pazaryeri mağazası"
+cocuk:
+  hedef_kitle: hayir
+  oynuyor: hayir
+hedefleme:
+  cocuk_profilleme: hayir
+karsilastirma:
+  rakip_adi_var: hayir

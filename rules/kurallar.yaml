@@ -1,0 +1,889 @@
+# Reklam Etiketi Kontrolü: kural dosyası
+# Bu bir hukuki görüş değildir; bilgilendirme amaçlıdır.
+#
+# Her kural: id, baslik, kategori, siddet, kosul (ne zaman devreye girer), duzeltme (ne yapılmalı),
+# kaynak (belge + madde + URL + okunma tarihi), gerekirse belirsizlik.
+# siddet: DUZELT (kurala aykırı görünüyor) | UYARI (risk ya da daha sıkı yorum) |
+#         UZMANA_SOR (hukuki değerlendirme gerekir) | MANUEL (gözle bakılmalı) | BILGI
+# Kontrol mantığı scripts/kontrol.py içinde kural id'si ile eşleşir. Anahtar kelime listeleri
+# en alttaki "sozluk" bölümündedir; genişletebilirsiniz (sonuna $ = tam kelime, r: = düzenli ifade).
+#
+# Kaynaklar çelişirse DAHA SIKI kural kodlandı ve "belirsizlik" alanında belirtildi.
+
+surum: "1.0.0"
+kural_tarihi: "2026-10-27"
+uyari_metni: "Bu bir hukuki görüş değildir; bilgilendirme amaçlıdır."
+yururluk_2026: "2026-08-01"
+
+kaynaklar:
+  - id: RG33297
+    belge: "Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliğinde Değişiklik Yapılmasına Dair Yönetmelik (Resmî Gazete 01.07.2026, sayı 33297; yürürlük 01.08.2026)"
+    url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+    okunma: "2026-10-27"
+    not: "Birincil kaynak. 23/A, 18(8), 27(10)-(13), 14(3)/(5)-(7), 17, 25/A, 28/B bu metinden."
+  - id: TRHTUY
+    belge: "Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliği (Resmî Gazete 10.01.2015, sayı 29232)"
+    url: https://www.resmigazete.gov.tr/eskiler/2015/01/20150110-5.htm
+    okunma: "2026-10-27"
+    not: "Ana metin. 2022 dahil değişiklikler işlenmiş hali için aşağıdaki Bakanlık PDF'i okundu."
+  - id: TRHTUY-KONS
+    belge: "Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliği, değişiklikler işlenmiş metin (Ticaret Bakanlığı, 2022 değişikliklerine kadar)"
+    url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+    okunma: "2026-10-27"
+    not: "2026 değişiklikleri bu PDF'te yok; onlar RG33297'den işlendi. mevzuat.gov.tr'de bu yönetmeliğin sayfası bulunamadı (MevzuatNo doğrulanamadı)."
+  - id: RG31737
+    belge: "Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliğinde Değişiklik (Resmî Gazete 01.02.2022, sayı 31737)"
+    url: https://www.resmigazete.gov.tr/eskiler/2022/02/20220201-6.htm
+    okunma: "2026-10-27"
+  - id: KILAVUZ
+    belge: "Sosyal Medya Etkileyicileri Tarafından Yapılan Ticari Reklam ve Haksız Ticari Uygulamalar Hakkında Kılavuz (Reklam Kurulu ilke kararı, 04.05.2021, 309 sayılı toplantı)"
+    url: https://ticaret.gov.tr/haberler/ticaret-bakanligi-sosyal-medya-etkileyicileri-icin-kilavuz-yayimladi
+    tam_metin_url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+    okunma: "2026-10-27"
+    not: "Tam metin IAB Türkiye'nin yayımladığı kopyadan okundu; Bakanlık sitesinde PDF bağlantısı bulunamadı. Kılavuz m.12(3): Kanun ve Yönetmeliğe aykırı yorumlanamaz. 2026 sonrası güncellendiğine ya da kaldırıldığına dair resmî kayıt bulunamadı."
+  - id: K6502
+    belge: "6502 sayılı Tüketicinin Korunması Hakkında Kanun"
+    url: https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf
+    okunma: "2026-10-27"
+    not: "m.61 (ticari reklam, örtülü reklam yasağı), m.62, m.63 (Reklam Kurulu), m.77(12) (yaptırımlar)."
+
+# Yayın türleri
+bicimler:
+  video: [reels, video, shorts, story, canli, tiktok]
+  gorsel: [gonderi, carousel]
+  sesli: [podcast, sesli]
+  kisa_sureli: [story]
+  uzun_video: [video, canli]
+
+# Açıklamanın "daha fazla" kısaltmasından önce görünen yaklaşık karakter sayısı.
+# [tahmin] Platformlar bunu değiştirir; kontrol ayrıca "ilk satır" şartı arar (daha sıkı).
+gorunur_karakter:
+  instagram: 125
+  tiktok: 100
+  youtube: 100
+  diger: 100
+
+kurallar:
+  # ---------------- ETİKET ----------------
+  - id: ETK-01
+    baslik: "Ticari ilişki var mı?"
+    kategori: etiket
+    siddet: UZMANA_SOR
+    kosul: >
+      Paylaşımda reklam verene ait mal veya hizmete yönlendirme (indirim kodu, bağlantı, satış ortaklığı), reklam verenden
+      para ya da ücretsiz veya indirimli ürün veya hizmet, reklam verenin ürünü için çekiliş, yarışma ya da kampanya veya
+      menfaat karşılığı etkinlik katılımı varsa içerik reklamdır. Girdi "ticari_iliski: bilinmiyor" ise ya da "hayir"
+      denmesine rağmen metinde bu sinyaller varsa kontrol durur ve sorar.
+    duzeltme: >
+      Ticari ilişkiyi netleştirin. Yukarıdakilerden biri varsa "ticari_iliski: evet" yapın ve etiket kurallarını uygulayın.
+      Yönlendirme ya da hediye ürün de, para alınmasa bile, reklam sayılır.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(2)(a)-(ç)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "4(1)(ş) sosyal medya etkileyicisi tanımı"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Kılavuz"
+        madde: "5(2)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+
+  - id: ETK-02
+    baslik: "\"Reklam\" ya da \"Tanıtım\" ifadesi var mı?"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      Ticari ilişki varsa açıklamada (YouTube'da başlık ya da açıklamada) "Reklam" veya "Tanıtım" ifadelerinden biri
+      olmalıdır. Yalnız "#işbirliği", "#sponsor", "#ortaklık", "ücretli ortaklık" gibi ifadeler bu şartı karşılamaz.
+    duzeltme: >
+      Açıklamanın en başına "Reklam" (ya da "Tanıtım") yazın. "#işbirliği" gibi etiketleri isterseniz ondan SONRA
+      ekleyebilirsiniz.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Kılavuz (eski liste, çelişki notu için)"
+        madde: "8(1), 10(1)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+    belirsizlik: >
+      2021 Kılavuzu "#Sponsor", "#İşbirliği", "#Ortaklık", "@marka ile işbirliği" ifadelerini de sayıyordu. Bazı haberler
+      01.08.2026 sonrası "iş birliği" ve "sponsorlu içerik" ifadelerinin de yeterli olduğunu yazıyor. Resmî Gazete'deki
+      23/A(3) metni ise yalnız "Reklam" ya da "Tanıtım" için "zorunludur" diyor. Daha sıkı olan Yönetmelik metni kodlandı.
+
+  - id: ETK-03
+    baslik: "Reklam verenin adı ya da @hesabı etiketle birlikte mi?"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      "Reklam/Tanıtım" ifadesiyle birlikte reklam verenin adı ya da ticaret unvanı, veya "@[reklam veren] tarafından
+      sağlandı.", "Ürünleri bana gönderdiği için @[reklam verene] teşekkürler.", "@[reklam verene] teşekkürler."
+      açıklamalarından biri içerikte yer almalıdır.
+    duzeltme: >
+      Etiket satırını "Reklam | @markahesabı" ya da "Reklam: @markahesabı tarafından sağlandı." biçiminde yazın.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+    belirsizlik: >
+      Metin adın "içerikte" yer almasını istiyor; etiketle aynı satırda olma şartı açıkça yazmıyor. Kontrol daha sıkı
+      davranır: ad etiketle aynı satırda değilse UYARI verir.
+
+  - id: ETK-04
+    baslik: "Etiket ilk bakışta görünüyor mu (ilk satır, diğer etiketlerden önce)?"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      Etiket, kullanıcı paylaşımla ilk karşılaştığında, ekranı kaydırmadan ya da "devamını gör" gibi başka bir alana
+      gitmeden görülmelidir. Başka etiket (#) veya açıklamalardan (@) ÖNCE gelmelidir. Kontrol: etiket açıklamanın ilk
+      satırında ve platformun görünen karakter sınırı içinde mi; önünde # veya @ var mı.
+    duzeltme: >
+      Etiket satırını açıklamanın ilk satırına, her şeyden önce koyun. Yorumlara, son satırlara ya da hashtag
+      yığınının içine koymayın.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(b), 23/A(4)(c)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Kılavuz"
+        madde: "5(3)(b), 7(1) (\"daha fazla oku\" alanına tıklatmadan)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+    belirsizlik: >
+      Görünen karakter sınırı platforma ve cihaza göre değişir (dosyadaki sayılar tahmindir). Bu yüzden ilk satır şartı
+      aranır.
+
+  - id: ETK-05
+    baslik: "Videoda/story'de ekranda etiket ilk kareden itibaren var mı?"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      Video, reels, shorts, TikTok ve story'de etiket ekranda yazılı olarak ilk kareden itibaren görünmelidir.
+      Story gibi kısa süreli içerikte paylaşım SÜRESİNCE kalmalıdır. Diğer videolarda tüm süre boyunca kalması önerilir.
+    duzeltme: >
+      Ekrana "REKLAM · @markahesabı" yazısını 0. saniyeden sona kadar, üst-orta bölgede, düz renkli bir kutu
+      üstünde koyun.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(b)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Kılavuz"
+        madde: "10(1) (kısa süreli içerik: \"paylaşım süresince\"), 7(1) (video: \"video içinde sürekli\" seçeneği)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+    belirsizlik: >
+      Yönetmelik videoda etiketin ne kadar süre kalacağını yazmıyor, sadece "ilk karşılaştıkları anda" diyor. Reels'te
+      açıklamanın ilk satırının yeterli sayılıp sayılmayacağı net değil. Daha sıkı yorum kodlandı: ekranda ilk kareden
+      itibaren (story'de tüm süre) zorunlu, diğer videolarda tüm süre önerilir.
+
+  - id: ETK-06
+    baslik: "Etiket okunaklı mı (kontrast, boyut)?"
+    kategori: etiket
+    siddet: MANUEL
+    kosul: >
+      Etiket paylaşımdaki renklerden ve arka fondan ayırt edilebilir ve kolay okunur büyüklükte olmalıdır.
+    duzeltme: >
+      Beyaz yazı + koyu düz kutu (ya da tersi) kullanın. Telefonda kolun uzunluğunda okunabilecek boyut seçin;
+      hareketli zeminde opak kutu kullanın.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(a)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "21(1)(a)-(b) (alt yazı kontrastı ve opak blok; benzetme yoluyla)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: ETK-07
+    baslik: "Etiket platform arayüzüyle çakışıyor mu?"
+    kategori: etiket
+    siddet: UYARI
+    kosul: >
+      Etiket, mecranın arayüzündeki yazı ya da simgelerle (kullanıcı adı, açıklama, beğen/yorum düğmeleri, ilerleme
+      çubuğu) örtüşmemelidir. Ekran yazısının konumu "alt", "sag_alt", "sol_alt" ya da "sag" ise uyarı verilir.
+    duzeltme: >
+      Etiketi üst-orta bölgeye (dikey videoda yaklaşık üstten %15-25 arası) taşıyın; sağdaki düğme sütunundan ve alttaki
+      açıklama alanından uzak tutun.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(ç)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: ETK-08
+    baslik: "Videoda sözlü beyan var mı?"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      YouTube gibi video paylaşım mecralarındaki videolar ve canlı yayınlarda reklam olduğu yazılı VE sözlü olarak
+      belirtilir. Reels/TikTok/shorts'ta sesli anlatım varsa sözlü beyan önerilir (UYARI).
+    duzeltme: >
+      Videonun başında (ya da reklam bölümünün başında) "Bu video [reklam veren] reklamı içerir." deyin.
+    ornek_metin: "Bu video {reklam_veren} reklamı içerir."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "7(1)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+    belirsizlik: >
+      Sözlü beyan şartı Kılavuz'dan geliyor; 2026 Yönetmeliği videoda sözlü beyanı açıkça istemiyor (yalnızca sesli
+      paylaşımlar için 23/A(5)). Kılavuz'daki örnek cümleler "Reklam/Tanıtım" kelimesi içermeyebilir; kontrol
+      "reklam" kelimesini içeren cümleyi önerir.
+
+  - id: ETK-09
+    baslik: "Yalnızca sesli paylaşım / podcast: başta sözlü beyan"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      Yalnızca sesli paylaşımlarda yayının başında ve reklamın öncesinde "[reklam veren] hakkında reklam/tanıtım
+      içerir." ifadesi yer almalıdır. Kılavuz podcast için başta, ortada ve sonda beyan istiyordu.
+    duzeltme: >
+      Kaydın ilk cümlesi ve reklam bölümünden hemen önceki cümle "{reklam_veren} hakkında reklam içerir." olsun.
+      Ortada ve sonda da tekrarlayın.
+    ornek_metin: "{reklam_veren} hakkında reklam içerir."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(5)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Kılavuz"
+        madde: "9(1)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+
+  - id: ETK-10
+    baslik: "Birden fazla parçaya yayılan içerikte her parçada etiket"
+    kategori: etiket
+    siddet: DUZELT
+    kosul: >
+      İçerik birden fazla paylaşıma yayılıyorsa (ör. art arda story'ler) etiket her birinde olmalıdır. Carousel'de ilk
+      karede de etiket önerilir.
+    duzeltme: >
+      Her story karesine / her parçaya aynı "REKLAM · @markahesabı" yazısını koyun.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(d)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: ETK-11
+    baslik: "Farklı biçim / başka platforma aktarılan paylaşımda etiket"
+    kategori: etiket
+    siddet: UYARI
+    kosul: >
+      Aynı reklam içeriği farklı paylaşım biçimlerinde (reels + story + TikTok) yer alıyorsa ya da birinden diğerine
+      alıntılanıyorsa (story'de reels paylaşmak) etiket her birinde olmalıdır.
+    duzeltme: >
+      Her platform ve biçim için etiketi ayrıca ekleyin; story'de paylaştığınız reels'in üstüne de etiket koyun.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(4)(e)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: ETK-12
+    baslik: "Markanın kendi hesabı"
+    kategori: etiket
+    siddet: UYARI
+    kosul: >
+      Paylaşım markanın kendi hesabından yapılıyor ve dışarıdan bir içerik üreticisi yoksa: 23/A'nın etkileyici tanımı
+      tüzel kişileri ve "kendisi adına" paylaşımı da kapsıyor, ama markanın kendi hesabında etiketin zorunlu olup olmadığı
+      metinde net değil. Her durumda reklamın reklam olduğu açıkça anlaşılmalıdır.
+    duzeltme: >
+      İçerik açıkça markanın kendi tanıtımı değilse (ör. röportaj, haber, "gerçek kullanıcı" görünümlü video) "Reklam"
+      etiketi ekleyin. Emin değilseniz eklemek düşük maliyetlidir.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "4(1)(ş)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "6(1), 6(3)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+    belirsizlik: "Markanın kendi hesabı için 23/A'nın uygulanıp uygulanmayacağı yorum meselesi."
+
+  - id: ETK-13
+    baslik: "Platformun \"ücretli ortaklık\" aracı tek başına yeterli mi?"
+    kategori: etiket
+    siddet: UYARI
+    kosul: >
+      Instagram/TikTok/YouTube'un yerleşik "ücretli ortaklık / paid partnership" etiketi kullanılıyorsa: bu etiket
+      "Reklam" ya da "Tanıtım" kelimesini içermediği için 23/A(3)'ü tek başına karşılamayabilir.
+    duzeltme: "Platform aracını kullanmaya devam edin, ama metne ve ekrana \"Reklam\" etiketini de ekleyin."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+    belirsizlik: "Reklam Kurulu'nun platform araçlarını nasıl değerlendirdiğine dair 2026 sonrası resmî açıklama bulunamadı."
+
+  # ---------------- ETKİLEYİCİ YÜKÜMLÜLÜKLERİ ----------------
+  - id: ETY-01
+    baslik: "Hediye ürün satın alınmış gibi gösterilmiş mi?"
+    kategori: etkileyici
+    siddet: DUZELT
+    kosul: "Ürün reklam verenden hediye geldiyse, metinde \"satın aldım\", \"kendi paramla\" gibi ifadeler olmamalı."
+    duzeltme: "\"Satın aldım\" yerine \"@markahesabı gönderdi\" ya da \"@markahesabı tarafından sağlandı\" yazın."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(d)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+
+  - id: ETY-02
+    baslik: "Deneyimlenmemiş ürün öneriliyor mu?"
+    kategori: etkileyici
+    siddet: DUZELT
+    kosul: "Ürünü henüz kullanmadıysanız onu onaylayan ya da deneyimlediğiniz algısını yaratan reklam paylaşamazsınız."
+    duzeltme: "Ürünü önce kullanın ya da metni \"ilk izlenim / kutu açılışı\" olarak dürüstçe yazın; \"yıllardır kullanıyorum\" gibi iddialardan kaçının."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(a)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "16(1) (tanıklı reklamlar)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: ETY-03
+    baslik: "Filtre/efekt kullanıldıysa belirtilmiş mi?"
+    kategori: etkileyici
+    siddet: DUZELT
+    kosul: "Bir malın reklamında görüntüye efekt veya filtre uygulandıysa bu açıkça belirtilmelidir."
+    duzeltme: "Ekrana ve açıklamaya \"Bu görüntüde filtre kullanılmıştır.\" yazın."
+    ornek_metin: "Bu görüntüde filtre kullanılmıştır."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(f)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+
+  - id: ETY-04
+    baslik: "\"Sadece bir tüketiciyim\" izlenimi"
+    kategori: etkileyici
+    siddet: DUZELT
+    kosul: >
+      Reklam verenden fayda sağlanırken "reklam değil", "kimse para vermedi", "tamamen kendi fikrim" gibi ifadelerle
+      sadece bir tüketici olduğunuz izlenimi verilemez.
+    duzeltme: "Bu ifadeleri çıkarın; ilişkiyi \"Reklam | @markahesabı\" ile açıkça belirtin."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(e)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+      - belge: "6502 sayılı Kanun"
+        madde: "61(4) (örtülü reklam yasağı)"
+        url: https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf
+        okunma: "2026-10-27"
+
+  # ---------------- YAPAY ZEKÂ ----------------
+  - id: YZ-01
+    baslik: "Yapay zekâ kullanımı açıkça belirtilmiş mi?"
+    kategori: yapay_zeka
+    siddet: DUZELT
+    kosul: >
+      Reklamda, tüketicinin satın alma kararını önemli ölçüde etkileyecek şekilde yapay zekâ veya başka bir yazılım
+      kullanıldıysa (ör. ürün görseli, ürünün sonucunu gösteren önce/sonra, ürünü kullanan kişi, ses) bu açık,
+      anlaşılır ve ayırt edilebilir şekilde belirtilmelidir.
+    duzeltme: >
+      Açıklamaya ve ekrana (görselin üstüne) kısa bir beyan koyun: "Bu reklamdaki [ürün görselleri / kişi / ses]
+      yapay zekâ ile oluşturulmuştur."
+    ornek_metin: "Bu reklamdaki {yz_neler} yapay zekâ ile oluşturulmuştur."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "18(8)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+    belirsizlik: >
+      Yönetmelik hazır bir beyan metni vermiyor ve "önemli ölçüde etkileyecek şekilde" ölçütünü tanımlamıyor. Kontrol,
+      ürün, sonuç, kişi ya da ses yapay zekâ ile üretildiyse beyanı hem açıklamada hem ekranda ister (daha sıkı).
+      Platformların otomatik "Yapay zekâ bilgisi" etiketinin yeterli olup olmadığı net değil.
+
+  - id: YZ-02
+    baslik: "İnsandan ayırt edilemeyen dijital karakter"
+    kategori: yapay_zeka
+    siddet: DUZELT
+    kosul: "Reklamda yapay zekâ ile üretilmiş ve insandan ayırt edilemeyen bir dijital karakter varsa bu açıkça belirtilmelidir."
+    duzeltme: "Karakter ekrandayken \"Bu karakter yapay zekâ ile oluşturulmuştur.\" yazısını gösterin; açıklamada da belirtin."
+    ornek_metin: "Bu karakter yapay zekâ ile oluşturulmuştur."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "18(8)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: YZ-03
+    baslik: "Gerçek bir kişinin yapay zekâ kopyası ürünü kullanmış/önermiş gibi mi?"
+    kategori: yapay_zeka
+    siddet: DUZELT
+    kosul: >
+      Gerçek bir kişinin yapay zekâ ile oluşturulmuş dijital kopyasının, gerçeğe aykırı biçimde ürünü bizzat
+      deneyimlediği, kullandığı ya da tavsiye ettiği izlenimini veren reklam YAPILAMAZ. Beyan eklemek bunu düzeltmez.
+    duzeltme: >
+      Bu sahneyi çıkarın. Kişi ürünü gerçekten kullanıyor ve onay veriyorsa gerçek çekim ve yazılı izin kullanın;
+      bu durumda da bir uzmana danışın.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "27(12)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "5(1)(f), 11(1) (izinsiz kişi kullanımı, itibardan haksız yararlanma)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: YZ-04
+    baslik: "Yapay zekâ yalnızca yardımcı araç olarak mı kullanıldı?"
+    kategori: yapay_zeka
+    siddet: UYARI
+    kosul: >
+      Yapay zekâ yalnızca metin yazımı, altyazı, arka plan, renk düzeltme gibi ürünü ya da sonucu değiştirmeyen işlerde
+      kullanıldıysa 18(8) kapsamına girip girmediği net değildir.
+    duzeltme: >
+      Görüntü ürünü ya da sonucu olduğundan farklı göstermiyorsa beyan zorunlu olmayabilir. Emin değilseniz kısa bir
+      beyan ekleyin: "Görsellerde yapay zekâ ile düzenleme yapılmıştır."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "18(8)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+    belirsizlik: "Kapsamın sınırı Yönetmelik'te tanımlı değil."
+
+  # ---------------- İNDİRİM / FİYAT ----------------
+  - id: FYT-01
+    baslik: "İndirimli satış reklamında zorunlu bilgiler"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: >
+      İndirim gösteren herhangi bir yazılı, sesli ya da görsel ibare varsa reklamda indirimden önceki fiyat, indirimin
+      başlangıç ve bitiş tarihleri ve miktar sınırlıysa bu miktar açık ve anlaşılır şekilde yer almalıdır.
+    duzeltme: >
+      Açıklamaya ve ekrana şunu ekleyin: "İndirimden önceki fiyat: X TL · İndirimli fiyat: Y TL · Kampanya: GG.AA–GG.AA.YYYY
+      · Stok: N adet ile sınırlı (varsa)".
+    kaynak:
+      - belge: "Yönetmelik (RG 31737 ile değişik)"
+        madde: "14(1)"
+        url: https://www.resmigazete.gov.tr/eskiler/2022/02/20220201-6.htm
+        okunma: "2026-10-27"
+
+  - id: FYT-02
+    baslik: "İndirimden önceki fiyat = son 10 günün en düşük fiyatı mı?"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: >
+      Mal satışında indirimden önceki fiyat, indirimin başlangıç tarihinden önceki 10 gün içinde uygulanan EN DÜŞÜK
+      fiyattır. Meyve-sebze gibi çabuk bozulan mallarda ve hizmetlerde indirimli fiyattan bir önceki fiyat esas alınır.
+      01.08.2026'dan önce başlayan indirimlerde bu süre 30 gündü. İspat yükü reklam verendedir.
+    duzeltme: >
+      Üstü çizili fiyatı, son 10 günün en düşük fiyatıyla değiştirin ve indirim oranını bu fiyata göre yeniden
+      hesaplayın. Fiyat geçmişinin kaydını (ekran görüntüsü, sipariş kaydı) saklayın.
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile değişik)"
+        madde: "14(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik (RG 31737 ile değişik, 01.08.2026 öncesi hali: 30 gün; ispat külfeti)"
+        madde: "14(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2022/02/20220201-6.htm
+        okunma: "2026-10-27"
+    belirsizlik: >
+      2026 metni ispat külfeti cümlesini yeniden yazmadı; 2022 metnindeki "ispat külfeti reklam verene aittir" cümlesinin
+      yeni üçüncü fıkrada kalıp kalmadığı net değil. Genel kural olarak Yönetmelik 9(1) ve Kanun 61(6) iddiaların ispatını
+      reklam verene yüklüyor.
+
+  - id: FYT-03
+    baslik: "Önceki fiyat aynı satış kanalından mı?"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: >
+      Ürün farklı kanallarda satılıyorsa (web sitesi, pazaryeri, mağaza, Instagram) indirimden önceki fiyat yalnız
+      indirimin yapıldığı kanaldaki fiyattır. Bir kanaldaki fiyat başka kanaldaki indirim için kullanılamaz.
+    duzeltme: "Üstü çizili fiyatı, indirimin yapıldığı kanalın son 10 günlük en düşük fiyatından alın."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "14(5)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: FYT-04
+    baslik: "İndirim oranı abartılı mı?"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: >
+      Gerçekte olduğundan daha fazla indirim uygulanıyormuş izlenimi veren ifade veya görüntü olamaz. Metindeki en
+      yüksek yüzde, doğru referans fiyata göre hesaplanan oranı aşıyorsa hata verilir.
+    duzeltme: "Yüzdeyi doğru referans fiyata göre yeniden hesaplayın (aşağı yuvarlayın)."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "14(2)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: FYT-05
+    baslik: "Fiyat vergiler dahil ve TL olarak mı?"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: "Reklamdaki fiyat tüm vergiler dahil toplam satış fiyatı olmalı ve \"TL\", \"Türk Lirası\" ya da ₺ ile yazılmalıdır. \"+KDV\" tüketici reklamında olmaz."
+    duzeltme: "Fiyatı KDV dahil toplam fiyat olarak yazın; \"+KDV\" ifadesini kaldırın."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "13(2), 13(4)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: FYT-06
+    baslik: "Süre ya da stok sınırı açıkça yazılmış mı?"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: "Fiyatın geçerliliğiyle ilgili süre veya stok sınırı varsa (\"stoklarla sınırlı\", \"son gün\") süre ve stok miktarı açıkça belirtilmelidir."
+    duzeltme: "\"Stoklarla sınırlı\" yerine \"200 adet ile sınırlı\" gibi sayı ve bitiş tarihi yazın."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "13(9), 14(1)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: FYT-07
+    baslik: "Taksit varsa toplam fiyat ve taksit sayısı"
+    kategori: indirim
+    siddet: DUZELT
+    kosul: "Taksit tutarı verilen reklamlarda toplam fiyat ve taksit sayısı, taksit tutarıyla birlikte okunur büyüklükte gösterilmelidir."
+    duzeltme: "\"Ayda 250 TL\" yanına \"12 taksit, toplam 3.000 TL\" yazın."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "13(7)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: FYT-08
+    baslik: "Koşullu indirim (\"2 al 1 öde\", \"500 TL üzeri\")"
+    kategori: indirim
+    siddet: UYARI
+    kosul: >
+      İndirim belli miktarda alım ya da bir işlem şartına bağlıysa (koşullu satış) 14. madde kuralları (önceki fiyat,
+      tarihler) yine uygulanır; fiyatın başka bir alıma bağlı olduğu şartlar açıkça yazılmalıdır.
+    duzeltme: "Şartı (\"2 adet alımda\", \"sepet 500 TL ve üzeri\") ana mesajda yazın; önceki fiyat ve tarihleri de ekleyin."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "14(7)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "13(6)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  # ---------------- SAĞLIK ve YASAKLI ÜRÜNLER ----------------
+  - id: SAG-01
+    baslik: "Sağlık beyanı kırmızı bayrakları"
+    kategori: saglik
+    siddet: UZMANA_SOR
+    kosul: >
+      Metinde hastalık, tedavi, zayıflama, bağışıklık, "mucize", "yan etkisiz", "klinik olarak kanıtlanmış" gibi ifadeler
+      varsa: ilgili mevzuata aykırı sağlık beyanı yapılamaz; bilimsel iddialar ispatlanmalı ve çarpıtılmamalıdır.
+      Sağlık beyanının hangi ürün için serbest olduğu sektör mevzuatına (gıda, kozmetik, tıbbi cihaz) bağlıdır; bu
+      araç onu değerlendirmez.
+    duzeltme: >
+      Hastalık, tedavi ve kesin sonuç vaat eden ifadeleri çıkarın. Kalan iddialar için belge isteyin ve yayından önce
+      bir uzmana ya da reklam verenin hukuk ekibine danışın.
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(b), 6(1)(c)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "5(1)(h), 7(5)(a), 7(8), 9(2)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+    belirsizlik: >
+      RG 33297 Yönetmeliğin 26. maddesini (özel mevzuata uyum) ve Ek'teki A-13 bendini (mevzuata aykırı sağlık beyanı
+      aldatıcı uygulamadır) yürürlükten kaldırdı. Bu, sağlık beyanlarının serbest olduğu anlamına gelmez; sektör
+      mevzuatı ve 7. madde (yanıltıcılık) geçerlidir. Kontrol bu yüzden UZMANA_SOR verir.
+
+  - id: SAG-02
+    baslik: "Hekim, eczacı ya da sağlık kuruluşu tanıtımı"
+    kategori: saglik
+    siddet: UZMANA_SOR
+    kosul: >
+      Etkileyiciler doktor, diş hekimi, veteriner hekim, eczacı ve sağlık kuruluşlarının sunduğu mal veya hizmetlere
+      yönlendirme yapamaz, bunların tanıtımını yapamaz. Reklamlarda bu meslek mensuplarının sağlık beyanında bulunduğu
+      izlenimi verilemez.
+    duzeltme: "Klinik, hastane, hekim ya da eczane tanıtımı içeren etkileyici paylaşımlarını yayınlamadan önce uzmana danışın; çoğu durumda yapılmamalıdır."
+    kaynak:
+      - belge: "Kılavuz"
+        madde: "6(1)(ç)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "16(3)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: SAG-03
+    baslik: "Takviye edici gıda: normal beslenmenin yerine geçer izlenimi / karşılaştırma"
+    kategori: saglik
+    siddet: DUZELT
+    kosul: >
+      Takviye edici gıdalar normal beslenmede tüketilen gıdaların yerine geçtiği izlenimiyle reklam edilemez.
+      Takviye edici gıdaların karşılaştırmalı reklamı hiçbir şekilde yapılamaz.
+    duzeltme: "\"Öğün yerine\", \"yemek yerine\" gibi ifadeleri ve rakip ürünle kıyaslamayı çıkarın."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "27(10)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "8(3)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: SAG-04
+    baslik: "Reklamı yasak ürün ve hizmetler"
+    kategori: saglik
+    siddet: DUZELT
+    kosul: >
+      Beşerî tıbbi ürün (ilaç), elektronik sigara, tütün mamulleri ve alkollü içkilerin; falcı, medyum, astrolog
+      hizmetlerinin; yasadışı bahis, kumar ve yasadışı şans oyunlarının; sohbet/arkadaşlık hatlarının ve (istisnalar
+      dışında) silahların reklamı yapılamaz. Ürün kategorisi girdide bunlardan biriyse DUZELT; yalnız metinde anahtar
+      kelime geçiyorsa UZMANA_SOR verilir.
+    duzeltme: "Bu ürün/hizmet için reklam paylaşımı yapmayın."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "27(11), 27(3) (\"yasadışı şans oyunu\" eklendi)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "27(3), 27(8), 27(9)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  # ---------------- ÇOCUKLAR ----------------
+  - id: COC-01
+    baslik: "Çocuklara yönelik ya da çocuk oynayan reklam"
+    kategori: cocuk
+    siddet: MANUEL
+    kosul: >
+      Çocuklara yönelik, çocukları etkileme olasılığı olan ya da çocukların oynadığı reklamlarda 24. maddedeki liste
+      gözden geçirilmelidir (tehlikeli davranış, gerçek dışı beklenti, akran üstünlüğü, ebeveyni ikna etmeye teşvik,
+      "her bütçeye uygun", fiyat yanında "yalnızca/sadece" vb.).
+    duzeltme: >
+      Fiyatın yanındaki "yalnızca/sadece" kelimelerini, "annene söyle, al(dır)" türü çağrıları ve "her aile bütçesine
+      uygun" ifadesini çıkarın; çocuğun güvenliğini ve gerçekçi beklentiyi kontrol edin.
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "24(1)(a)-(n), 5(1)(ç)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+      - belge: "6502 sayılı Kanun"
+        madde: "61(3)"
+        url: https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf
+        okunma: "2026-10-27"
+
+  - id: COC-02
+    baslik: "Çocuğa yönelik ifade ihlalleri (metinde bulunan)"
+    kategori: cocuk
+    siddet: DUZELT
+    kosul: >
+      Çocuklara yönelik reklamda fiyat yanında "yalnızca/sadece", "her bütçeye uygun", ebeveyni ikna etmeye doğrudan
+      teşvik ya da doğrudan çocuğa satın alma daveti (mesafeli satış) bulunamaz.
+    duzeltme: "Bulunan ifadeleri çıkarın."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "24(1)(ı), 24(1)(j), 24(1)(k), 24(2)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: COC-03
+    baslik: "Çocuklara kişisel veriyle hedefli reklam"
+    kategori: cocuk
+    siddet: DUZELT
+    kosul: "Tüketicinin çocuk olduğu biliniyorsa ya da makul olarak bilinmesi bekleniyorsa kişisel verilere dayalı profilleme ile hedefli reklam yapılamaz."
+    duzeltme: "Reklam hedeflemesinde 18 yaş altı kitleyi ve çocuklara yönelik ilgi alanı profillerini kullanmayın."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "25/A(3)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+    belirsizlik: "25/A satıcı, sağlayıcı ve aracı hizmet sağlayıcılara hitap eder; etkileyicinin kendi hedeflemesine nasıl uygulanacağı net değil."
+
+  - id: COC-04
+    baslik: "Aşırı tüketimi önerilmeyen gıdalar ve çocuklar"
+    kategori: cocuk
+    siddet: UZMANA_SOR
+    kosul: >
+      Sağlık Bakanlığı listesinin kırmızı kategorisindeki gıda ve içecekler (ör. bazı tatlı ve yağlı atıştırmalıklar)
+      münhasıran çocuklara yönelik mecralarda reklam edilemez; diğer mecralarda dengeli beslenme uyarısı gerekir.
+    duzeltme: "Ürünün kırmızı kategoride olup olmadığını reklam verene sorun; öyleyse uyarı metnini ekleyin ve çocuk kitlesini hedeflemeyin."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "24/A"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  # ---------------- KARŞILAŞTIRMALI REKLAM ----------------
+  - id: KRS-01
+    baslik: "Rakibin adı, markası ya da logosu geçiyor mu?"
+    kategori: karsilastirma
+    siddet: DUZELT
+    kosul: "Karşılaştırmalı reklamlarda rakiplere ait ürün adı, marka, logo, ticaret unvanı veya diğer ayırt edici unsurlara yer verilemez."
+    duzeltme: "Rakibin adını, logosunu ve tanınır ambalajını çıkarın (bulanıklaştırmak yeterli olmayabilir; ayırt edilemez hale getirin)."
+    kaynak:
+      - belge: "Yönetmelik (RG 28.12.2018/30639 ile eklenen)"
+        madde: "8(1)(a)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: KRS-02
+    baslik: "Karşılaştırma iddiası belgeli ve objektif mi?"
+    kategori: karsilastirma
+    siddet: UZMANA_SOR
+    kosul: >
+      Karşılaştırma aynı ihtiyacı karşılayan ürünler arasında, maddi ve doğrulanabilir özellikler üzerinden, objektif
+      olmalı; iddialar üniversitelerin ilgili bölümlerinden ya da akredite/bağımsız kuruluşlardan alınmış belgelerle
+      kanıtlanmalı; rakip kötülenmemelidir.
+    duzeltme: "Karşılaştırmanın dayandığı test raporunu reklam verenden isteyin; yoksa karşılaştırmayı çıkarın."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "8(1)(b)-(ı), 9(3), 10(1)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: KRS-03
+    baslik: "Üstünlük iddiası (\"en iyi\", \"1 numara\", \"Türkiye'nin en ...\")"
+    kategori: karsilastirma
+    siddet: UYARI
+    kosul: "Reklamdaki iddiaların doğruluğunu ispat yükü reklam verendedir; doğrulanabilir iddialar bilimsel geçerliliği olan belgelerle kanıtlanmalıdır."
+    duzeltme: "Belgesi yoksa üstünlük iddiasını kişisel ve ölçülü bir ifadeyle değiştirin (\"benim favorim\")."
+    kaynak:
+      - belge: "Yönetmelik"
+        madde: "9(1), 9(2), 7(5)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+      - belge: "6502 sayılı Kanun"
+        madde: "61(6)"
+        url: https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf
+        okunma: "2026-10-27"
+
+  # ---------------- ÇEVRE ----------------
+  - id: CEV-01
+    baslik: "Çevresel beyan (\"çevre dostu\", \"sürdürülebilir\", \"karbon nötr\")"
+    kategori: cevre
+    siddet: UYARI
+    kosul: >
+      Genel çevresel ifadeler açıklamasız ya da belirsizlik yaratacak şekilde kullanılamaz; beyanın ürünün hangi
+      bölümü veya yaşam döngüsünün hangi süreci için olduğu açıkça yazılmalı; ölçüm yöntemi reklamda ya da bağlantıyla
+      erişilebilir olmalı; sertifikalar yetkili/akredite kuruluş belgesiyle ispatlanmalıdır.
+    duzeltme: >
+      "Çevre dostu" yerine somut ifade yazın: "Ambalaj %80 geri dönüştürülmüş kartondan (belge: ..., ayrıntı: link)".
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile değişik/eklenen)"
+        madde: "17(3), 17(5), 17(6), 4(1)(r)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  # ---------------- DİĞER ----------------
+  - id: DGR-01
+    baslik: "Tüketici yorumu / puan kullanımı"
+    kategori: diger
+    siddet: UYARI
+    kosul: "Satın alma doğrulaması yapılmamış tüketici değerlendirmeleri reklamlarda kullanılamaz; yorumlar genel niteliği yansıtmalıdır."
+    duzeltme: "Yalnız doğrulanmış alıcı yorumlarını kullanın; tek bir iyi yorumu genel kanaat gibi göstermeyin."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile değişik)"
+        madde: "28/B(6), 28/B(8)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: DGR-02
+    baslik: "Ödül ve akademik unvan"
+    kategori: diger
+    siddet: UYARI
+    kosul: >
+      Önceden ilan edilmiş objektif kriterlere dayanmayan ve menfaat karşılığı verilen ödüller reklamda kullanılamaz;
+      ödüller ve akademik unvanlar konusunda tüketici yanıltılamaz.
+    duzeltme: "Ödülün adı, veren kurum ve yılını yazın; para karşılığı alınan \"yılın markası\" türü ödülleri kullanmayın. Unvanı doğru yazın."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen/değişik)"
+        madde: "27(13), 7(5)(g)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+
+  - id: DGR-03
+    baslik: "Çekiliş / yarışma"
+    kategori: diger
+    siddet: UYARI
+    kosul: >
+      Reklam verenin ürünü için çekiliş veya yarışma içeriği reklamdır (etiket gerekir). Promosyon süresinin başlangıç
+      ve bitiş tarihi ile teslim koşulları açıklanmalıdır.
+    duzeltme: "\"Reklam | @markahesabı\" etiketini ekleyin; çekiliş başlangıç-bitiş tarihini, katılım ve teslim koşullarını yazın. Çekilişler için ayrı izin mevzuatı olabilir; bu araç onu kontrol etmez."
+    kaynak:
+      - belge: "Yönetmelik (RG 33297 ile eklenen)"
+        madde: "23/A(2)(c)"
+        url: https://www.resmigazete.gov.tr/eskiler/2026/07/20260701-9.htm
+        okunma: "2026-10-27"
+      - belge: "Yönetmelik"
+        madde: "15(1)(c)"
+        url: https://tuketici.ticaret.gov.tr/data/5e819a8e13b876a1b04c7a4a/T%C4%B0CAR%C4%B0%20REKLAM%20VE%20HAKSIZ%20T%C4%B0CAR%C4%B0%20UYGULAMALAR%20Y%C3%96NETMEL%C4%B0%C4%9E%C4%B0.pdf
+        okunma: "2026-10-27"
+
+  - id: DGR-04
+    baslik: "Yaptırım bilgisi (her raporda)"
+    kategori: diger
+    siddet: BILGI
+    kosul: >
+      Aykırılıkta Reklam Kurulu durdurma, aynı yöntemle düzeltme, idari para cezası, 3 aya kadar tedbiren durdurma ve
+      internette içeriğin çıkarılması / erişim engeli kararı verebilir. Reklam veren, ajans ve mecra ayrı ayrı sorumludur;
+      sonradan düzeltmek sorumluluğu kaldırmaz.
+    duzeltme: "Bilgi amaçlıdır. Ceza tutarları kanunda yazılıdır ve her yıl güncellenir; tutar için resmî kaynağa bakın."
+    kaynak:
+      - belge: "6502 sayılı Kanun"
+        madde: "63(1), 77(12)"
+        url: https://mevzuat.gov.tr/mevzuatmetin/1.5.6502.pdf
+        okunma: "2026-10-27"
+      - belge: "Kılavuz"
+        madde: "11, 12(1)-(2)"
+        url: https://iabtr.org/wp-content/uploads/2024/06/Sosyal-Medya-Etkileyicileri-Tarafindan-Yapilan-Ticari-Reklam-ve-Haksiz-Ticari-Uygulamalar-Hakkinda-Kilavuz1062021101250.pdf
+        okunma: "2026-10-27"
+
+# ---------------- SÖZLÜK (anahtar kelimeler) ----------------
+# Eşleşme Türkçe harf duyarsızdır (İ/ı, ş/s, ğ/g, ü/u, ö/o, ç/c, â/a aynı sayılır) ve kelime başından aranır
+# (ör. "tedavi" -> "tedavisi" de eşleşir). Sonuna $ koyarsanız tam kelime aranır. "r:" ile başlayan düzenli ifadedir.
+sozluk:
+  etiket_gecerli: ["reklam", "tanıtım"]
+  etiket_yetersiz: ["işbirliği", "iş birliği", "sponsor", "ortaklık", "paid partnership", "ücretli ortaklık", "ad$", "partner"]
+  tuketici_izlenimi: ["reklam değil", "reklam degildir", "reklam değildir", "#reklamdeğil", "işbirliği değil", "kimse para vermedi", "kimse bana para", "tamamen kendi fikrim", "tamamen kendi görüşüm"]
+  satin_aldim: ["satın aldım", "kendi paramla", "kendi param ile", "sipariş verdim", "parasını verdim"]
+  ticari_sinyal: ["indirim kodu", "kodumla", "kodunu kullan", "kodu ile", "linkte", "bio'daki link", "biodaki link", "profildeki link", "affiliate", "komisyon", "hediye edildi", "pr paketi", "pr kutusu", "gönderdiği için", "davetlisi olarak", "çekiliş"]
+  yz_beyan: ["yapay zek", "yz ile", "ai ile", "ai-generated", "ai generated", "#yapayzeka", "#ai$", "#aiart"]
+  filtre_beyan: ["filtre", "efekt"]
+  indirim_sinyal: ["indirim", "sepette", "kampanya fiyat", "fırsat fiyat", "outlet", "black friday", "efsane cuma", "sale$", "ucuzladı", "üstü çizili", "r:\\d[\\d.,]*\\s*(tl|₺)?\\s*yerine"]
+  # yüzde ifadeleri (%30) yalnız metinde fiyat da varsa indirim sayılır (kontrol.py)
+  vergi_haric: ["+kdv", "+ kdv", "kdv hariç", "artı kdv"]
+  stok_sinyal: ["stoklarla sınırlı", "sınırlı sayıda", "sınırlı stok", "tükenmeden", "stok bitmeden", "son gün", "son fırsat"]
+  stok_sayi: ["r:\\d+\\s*(adet|ürün|kişi)", "r:ilk\\s+\\d+"]
+  taksit: ["taksit"]
+  kosullu: ["al 1 öde", "al bir öde", "alana 1", "ikincisi", "tl ve üzeri", "tl üzeri", "üzeri alışveriş", "sepette ek"]
+  saglik_kirmizi: ["tedavi", "iyileştir", "şifa", "kanser", "diyabet", "r:seker hastal", "tansiyon", "kolesterol", "zayıflat", "kilo verdir", "kilo kaybı", "kilo ver", "yağ yak", "selülit", "detoks", "bağışıklı", "mucize", "yan etkisi yok", "yan etkisiz", "hastalı", "ağrıyı geçir", "ağrı kesici", "romatizma", "saç dökülmesini durdur", "klinik olarak kanıtlan", "doktor onaylı", "dermatolog onaylı", "%100 etkili", "garantili sonuç", "depresyon", "ilaç gibi"]
+  saglik_meslek: ["doktor", "dr.", "hekim", "diş hekimi", "dişçi", "eczacı", "eczane", "klinik$", "kliniği", "kliniğ", "hastane", "poliklinik", "estetik merkez", "saç ekim", "botoks", "burun estetiği", "estetik ameliyat"]
+  takviye: ["takviye", "vitamin", "supplement", "kolajen", "omega", "probiyotik", "multivitamin"]
+  takviye_yerine: ["öğün yerine", "yemek yerine", "yemeğin yerine", "beslenmenin yerine", "sebze meyve yerine", "yerine geçer"]
+  yasakli_urun: ["e-sigara", "elektronik sigara", "vape", "nargile", "sigara", "tütün", "puro", "alkol", "bira$", "biralar", "şarap", "rakı$", "viski", "votka", "tekila", "ilaç$", "ilacı", "antibiyotik", "casino", "kumar", "rulet", "slot$", "bahis", "falcı", "fal$", "tarot", "medyum", "astrolog", "silah", "tabanca", "arkadaşlık hattı", "sohbet hattı"]
+  yasakli_kategori: [ilac, e_sigara, tutun, alkol, fal_medyum, yasadisi_bahis, kumar, sohbet_hatti, silah]
+  cocuk: ["çocuk", "çocuğ", "minik", "bebek", "okul", "oyuncak", "anaokul", "kreş", "veliler"]
+  cocuk_riskli: ["her bütçeye uygun", "her aile bütçesine", "annene söyle", "babana söyle", "anne babana söyle", "annene aldır", "babana aldır", "hemen sipariş ver", "r:(yalnızca|sadece)\\s+\\d"]
+  karsilastirma: ["rakip", "diğer markalar", "piyasadaki", "muadil", "karşılaştır", "kıyasla", "kat daha", "daha ucuz", "daha iyi", "daha uzun süre", "r:\\bvs\\.?\\b"]
+  ustunluk: ["en iyi", "en ucuz", "en kaliteli", "en çok satan", "1 numara", "bir numara", "türkiye'nin en", "türkiye’nin en", "dünyanın en", "lider marka", "rakipsiz"]
+  cevre: ["çevre dostu", "doğa dostu", "çevreci", "yeşil ürün", "sürdürülebilir", "karbon nötr", "karbon ayak", "sıfır atık", "eko$", "ekolojik", "geri dönüştürülebilir", "geri dönüştürülmüş", "biyobozunur", "doğada çözünür", "doğaya zararsız", "plastiksiz"]
+  yorum: ["müşteri yorum", "kullanıcı yorum", "yorumlarımız", "5 yıldız", "yıldızlı", "5/5", "puanı", "puanla", "mutlu müşteri", "müşterilerimiz diyor", "değerlendirmeler"]
+  odul: ["ödül", "yılın markası", "yılın ürünü", "tüketici tercihi", "altın madalya", "birincisi seçildi"]
+  akademik: ["prof.", "prof$", "doç.", "doçent", "profesör", "uzman dr"]
+  cekilis: ["çekiliş", "yarışma", "giveaway", "hediye ediyoruz", "kazanan"]

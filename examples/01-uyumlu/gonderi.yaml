@@ -1,0 +1,45 @@
+# KURGUSAL ÖRNEK: kişi ve marka adları uydurmadır.
+# Durum: kahve içerik üreticisi, markadan hediye ürün aldı, Instagram reels paylaşacak.
+platform: instagram
+bicim: reels
+hesap_turu: icerik_uretici
+yayin_tarihi: "2026-11-03"
+ticari_iliski: evet
+iliski_turu: [hediye_urun]
+reklam_veren: "Kozalak Kahve Atölyesi"
+reklam_veren_hesap: "@kozalakkahve_ornek"
+urun_kategorisi: gida
+platform_ortaklik_etiketi: evet
+urunu_deneyimledi: evet
+filtre: hayir
+aciklama: |
+  Reklam | @kozalakkahve_ornek tarafından sağlandı.
+  Üç haftadır her sabah soğuk demleme yapıyorum. 12 saat buzdolabında bekletip süzüyorum;
+  acılığı az, meyvemsi bir tat çıkıyor. Tarifi videonun sonunda.
+  #kahve #soğukdemleme #sabahrutini
+ekran_yazilari:
+  - metin: "REKLAM · @kozalakkahve_ornek"
+    baslangic: 0
+    bitis: 20
+    konum: ust
+  - metin: "12 saat · buzdolabı · süz"
+    baslangic: 6
+    bitis: 14
+    konum: orta
+seslendirme: |
+  Bu video Kozalak Kahve Atölyesi reklamı içerir. Üç haftadır soğuk demleme yapıyorum,
+  size adım adım göstereyim.
+sure_sn: 20
+parca_sayisi: 1
+capraz_paylasim: []
+yapay_zeka:
+  kullanildi: hayir
+  neler: []
+  gercek_kisi_kopyasi: hayir
+cocuk:
+  hedef_kitle: hayir
+  oynuyor: hayir
+hedefleme:
+  cocuk_profilleme: hayir
+karsilastirma:
+  rakip_adi_var: hayir

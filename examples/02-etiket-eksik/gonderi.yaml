@@ -1,0 +1,43 @@
+# KURGUSAL ÖRNEK: kişi ve marka adları uydurmadır.
+# Durum: içerik üreticisi bir serum markasından ücret aldı; TikTok videosu planlıyor, etiketi #işbirliği ile geçmiş.
+platform: tiktok
+bicim: tiktok
+hesap_turu: icerik_uretici
+yayin_tarihi: "2026-11-05"
+ticari_iliski: evet
+iliski_turu: [ucret]
+reklam_veren: "Parlak Cilt Laboratuvarı"
+reklam_veren_hesap: "@parlakcilt_ornek"
+urun_kategorisi: kozmetik
+platform_ortaklik_etiketi: hayir
+urunu_deneyimledi: evet
+filtre: hayir
+aciklama: |
+  Bu serum hayatımı değiştirdi, gördüğüm en iyi serum! Sivilcelerimi bir haftada tedavi etti.
+  Akşam rutinimde 2 damla yeterli.
+  #cilt #ciltbakımı #skincare #işbirliği @parlakcilt_ornek
+ekran_yazilari:
+  - metin: "1 HAFTADA FARK"
+    baslangic: 0
+    bitis: 5
+    konum: orta
+  - metin: "akşam · 2 damla"
+    baslangic: 5
+    bitis: 12
+    konum: alt
+seslendirme: |
+  Bir haftadır bu serumu kullanıyorum ve sonuç ortada. Akşamları iki damla.
+sure_sn: 12
+parca_sayisi: 1
+capraz_paylasim: [instagram_reels, youtube_shorts]
+yapay_zeka:
+  kullanildi: hayir
+  neler: []
+  gercek_kisi_kopyasi: hayir
+cocuk:
+  hedef_kitle: hayir
+  oynuyor: hayir
+hedefleme:
+  cocuk_profilleme: hayir
+karsilastirma:
+  rakip_adi_var: hayir
