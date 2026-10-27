@@ -1,4 +1,4 @@
-"""Small, dependency-free YAML subset loader (MIT, Redirhan Studio).
+"""Small, dependency-free YAML subset loader (MIT, Redirhan Labs).
 
 Used when PyYAML is not installed. Supports what this skill's files use:
 block mappings and sequences (2-space indents), sequences of mappings ("- key: value"),

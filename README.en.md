@@ -6,7 +6,7 @@ A Claude Code skill that checks a **planned** Instagram, TikTok, YouTube or podc
 advertising disclosure rules before it goes live. It reads the caption, on-screen text, voice-over transcript and,
 optionally, key frames, and writes a checklist with article numbers plus copy-paste fixes. Output is in Turkish.
 
-Made by Redirhan Studio. Free, MIT licence.
+Made by Redirhan Labs. Free, MIT licence.
 
 ## Why now
 

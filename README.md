@@ -6,7 +6,7 @@ Instagram, TikTok, YouTube ya da podcast paylaşımını **yayından önce** Tü
 Açıklamayı, ekran yazılarını, seslendirmeyi ve isteğe bağlı olarak videonun karelerini okur. Madde numaralı bir
 kontrol listesi ve kopyala-yapıştır düzeltmeler yazar.
 
-İçerik üreticileri, markalar ve sosyal medya ajansları için. Redirhan Studio tarafından hazırlandı.
+İçerik üreticileri, markalar ve sosyal medya ajansları için. Redirhan Labs tarafından hazırlandı.
 Ücretsiz, MIT lisanslı.
 
 ## Neden şimdi?

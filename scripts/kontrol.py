@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reklam Etiketi Kontrolü (MIT, Redirhan Studio).
+"""Reklam Etiketi Kontrolü (MIT, Redirhan Labs).
 
 Planlanan bir Instagram / TikTok / YouTube paylaşımını (açıklama, ekran yazıları, seslendirme, isteğe bağlı kareler)
 Türk reklam mevzuatındaki etiket ve beyan kurallarına göre tarar; kontrol listesi + önerilen düzeltmeler yazar.
